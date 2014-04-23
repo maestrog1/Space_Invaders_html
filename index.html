@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+	<title>Space Invaders</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />	
+	<link rel="shortcut icon" href="http://maestrographics.net/aasite/app/webroot/img/maestro.jpg" type="image/x-icon"><link rel="icon" href="http://maestrographics.net/aasite/app/webroot/img/maestro.jpg" type="image/x-icon">
+<script src="http://jqueryjs.googlecode.com/files/jquery-1.3.js" type="text/javascript"></script>
+<style>
+    
+            /* Styling needed for a fullscreen canvas and no scrollbars. */
+            
+            #gamecontainer {
+                align:center;
+				width: 600px;
+				background:#000000;
+                margin-left: 100px;
+                margin-right: 50px;
+            }
+            #gamecanvas { 
+                width: 600px;
+                height: 600px;
+            }
+			
+            #info {
+                width: 400px;
+                 margin-left: 100px;
+                margin-right: 50px;
+            }
+			.hide{
+			visibility:hidden;
+			}
+			p{
+			color: #003366;
+			FONT-SIZE: 20px;
+			}
+			.lives{
+			position:relative;
+			background:#000000;
+			color:#ffffff;
+			text-align:left;
+			width:150px;
+			height:50px;
+			}
+        </style>
+</head>
+<body>
+<div id="gamecontainer" align="right">
+  <div class="lives">&nbsp;</div>
+        <canvas id="gameCanvas"></canvas>
+        </div>
+        <div id="info">
+            <p>Move&nbsp;&nbsp;<img id="player" src="images/player.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with arrow keys, fire with the space bar. Press P to pause.</p>
+             
+             <span id="audio">
+			<audio id="shoot" src="sounds/shoot.wav"></audio>
+			<audio id="bang" src="sounds/bang.wav"></audio>
+			<audio id="boom" src="sounds/explosion.wav"></audio>
+			
+	</span>   
+        </div><div class="hide"><img id="alien" src="images/alien.png"></div>
+		<script src="js/spaceinvaders.js"></script>
+        <script>
+
+               
+            var canvas = document.getElementById("gameCanvas");
+            canvas.width = 600;
+            canvas.height = 400;
+			
+ 
+            //  Create the game.
+            var game = new Game();
+
+            //  Initialise it with the game canvas.
+            game.initialize(canvas);
+
+            //  Start the game.
+            game.start();
+
+            //  Listen for keyboard events.
+            window.addEventListener("keydown", function keydown(e) {
+                var keycode = e.which || window.event.keycode;
+                //  Supress further processing of left/right/space (37/29/32)
+              /*  if(keycode == 37 || keycode == 39 || keycode == 32) {
+                    e.preventDefault();
+                }*/
+                game.keyDown(keycode);
+            });
+            window.addEventListener("keyup", function keydown(e) {
+                var keycode = e.which || window.event.keycode;
+                game.keyUp(keycode);
+            });
+
+            function toggleMute() {
+                game.mute();
+                document.getElementById("muteLink").innerText = game.sounds.mute ? "unmute" : "mute";
+            }
+   
+
+        </script>
+	
+			</div>
+		</body></html>
